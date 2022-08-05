@@ -25,11 +25,13 @@ export interface AccountProviderContext {
   createAccount: () => void;
   selectedAccount?: Account;
   selectAccount: (network: Account) => void;
+  deleteAccount: (network: Account) => void;
 }
 
 const AccountsContext = React.createContext<AccountProviderContext>({
   createAccount() {},
   selectAccount(n: Account) {},
+  deleteAccount(n: Account) {}
 });
 
 function AccountProvider(props: {children: ReactNode}) {
@@ -58,6 +60,14 @@ function AccountProvider(props: {children: ReactNode}) {
     setSelectedAccount(network);
     // setAccount(() => new Account(clusterApiUrl(network.endpoint)));
   };
+  const deleteAccount = (network: Account) => {
+    const currentAccounts = accounts.slice();
+    const filteredAccounts = currentAccounts.filter((account) => {
+      return account.id !== network.id;
+    });
+    setAccounts(filteredAccounts);
+    setSelectedAccount(filteredAccounts[filteredAccounts.length-1]);
+  }
 
   useEffect(() => {
     if (!account && selectedAccount) {
@@ -72,6 +82,7 @@ function AccountProvider(props: {children: ReactNode}) {
     createAccount,
     selectedAccount,
     selectAccount,
+    deleteAccount
   };
   return (
     <AccountsContext.Provider value={value}>

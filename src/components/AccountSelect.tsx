@@ -4,7 +4,7 @@ import {useAccounts} from '../providers';
 import {Section} from './Section';
 
 export const AccountSelect = () => {
-  const {accounts, selectedAccount, selectAccount, createAccount} =
+  const {accounts, selectedAccount, selectAccount, createAccount, deleteAccount} =
     useAccounts();
 
   return (
@@ -18,6 +18,7 @@ export const AccountSelect = () => {
         />
       ))}
       <Button title="Create Account" onPress={createAccount} />
+      {selectedAccount && <Button title="Delete Account" onPress={() =>deleteAccount(selectedAccount)} />}
     </Section>
   );
 };
