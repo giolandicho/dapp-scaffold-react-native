@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   ImageBackground,
   StyleSheet,
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 import {Colors} from './Colors';
+import { AuthContext, AuthUser } from '../providers/AuthProvider';
 
 export function Header() {
+  const auth = useContext(AuthContext);
+  const user = auth.currentUser ? auth.currentUser : undefined;
+  const handleLogout = () => {
+    auth.logout(user);
+  }
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <ImageBackground
@@ -25,6 +32,7 @@ export function Header() {
       <View>
         <Text style={styles.title}>Solana</Text>
         <Text style={styles.subtitle}>React Native</Text>
+        <Button title='Log Out' color={'white'} onPress={handleLogout}/>
       </View>
     </ImageBackground>
   );

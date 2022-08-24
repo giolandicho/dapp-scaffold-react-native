@@ -1,27 +1,19 @@
-import React, {useRef} from 'react';
-import {SafeAreaView, ScrollView, StatusBar} from 'react-native';
-import {Header} from './components';
-import {AccountProvider, ConnectionProvider} from './providers';
-import {Wallet} from './screens';
+import React from 'react';
+import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import AuthProvider from './providers/AuthProvider';
+
+import Navigator from './Navigator';
 
 export const App = () => {
-  const scrollViewRef = useRef<null | ScrollView>(null);
-
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <Header />
-      <SafeAreaView>
-        <ScrollView
-          ref={ref => (scrollViewRef.current = ref)}
-          contentInsetAdjustmentBehavior="automatic">
-          <AccountProvider>
-            <ConnectionProvider>
-              <Wallet />
-            </ConnectionProvider>
-          </AccountProvider>
-        </ScrollView>
-      </SafeAreaView>
+      <AuthProvider>
+        <NavigationContainer>
+          <Navigator/>
+        </NavigationContainer>
+      </AuthProvider>
     </>
   );
 };

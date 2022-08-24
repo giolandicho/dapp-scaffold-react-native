@@ -1,14 +1,15 @@
 import {LAMPORTS_PER_SOL} from '@solana/web3.js';
 import React, {useEffect, useState} from 'react';
 import {Button, Text, View} from 'react-native';
-import {AccountSelect, Balance, NetworkSelect, Section} from '../components';
-import {useAccounts, useConnections} from '../providers';
+import {AccountSelect, Balance, NetworkSelect, Section} from '../../components';
+import {useAccounts, useConnections} from '../../providers';
+
 
 export const Wallet = () => {
   const {selectedAccount} = useAccounts();
   const {connection, selectedNetwork} = useConnections();
-
   const [balance, setBalance] = useState<any>();
+  
 
   const getBalance = () => {
     if (!connection || !selectedAccount) return;
@@ -35,6 +36,7 @@ export const Wallet = () => {
     getBalance();
   }, [balance, getBalance, connection]);
 
+  
   return (
     <View>
       <NetworkSelect />
